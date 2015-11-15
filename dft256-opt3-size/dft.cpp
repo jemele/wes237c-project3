@@ -1,5 +1,6 @@
 #include "dft.h"
 #include "coefficients256.h"
+#include <ap_int.h>
 
 static DTYPE mult(DTYPE a, DTYPE b)
 {
@@ -20,7 +21,7 @@ static void dft_inner(int k, DTYPE real_sample[SIZE], DTYPE imag_sample[SIZE], D
 {
     outreal = 0;
     outimag = 0;
-    unsigned char angle = 0;
+    ap_uint<8>angle = 0;
     for (int t = 0; t < SIZE; ++t, angle += k) {
         const DTYPE cos_angle = cos_coefficients_table[angle];
         const DTYPE sin_angle = sin_coefficients_table[angle];
