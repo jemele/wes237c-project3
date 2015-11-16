@@ -13,35 +13,29 @@ OUTPUT:
 #include <math.h>
 #include "dft.h"
 
-DTYPE In_R[SIZE], In_I[SIZE], oreal[SIZE], oimag[SIZE];
+DTYPE In_R[SIZE], In_I[SIZE];
+stream_t oreal, oimag;
 
 int main()
 {
-	FILE *fp;
-	DTYPE pi = 3.141592653589;
+	// Generate inputs
 	printf("INPUTS\n");
-	for(int i=0; i<SIZE; i++)
-	{
+	for(int i=0; i<SIZE; i++) {
 		In_R[i] = i;
 		In_I[i] = 0.0;
-		oreal[i] = 0;
-		oimag[i] = 0;
-
 	}
-	
 
-
-	//Perform DFT
-//shour nows
+	// Perform DFT
 	dft(In_R, In_I, oreal, oimag);
 
+	// Save output
 	for(int k = 0; k < SIZE; k++) {
-		In_R[k] = oreal[k];
-		In_I[k] = oimag[k];
-    }
+		In_R[k] = oreal.read();
+		In_I[k] = oimag.read();
+	}
 
-	//Print output
-	fp=fopen("out.dat", "w");
+	// Print output
+	FILE *fp=fopen("out.dat", "w");
 	printf("\nPrinting DFT Output\n");
 	for(int i=0; i<SIZE; i++){
 		printf("%4d\t%f\t%f\n",i,In_R[i],In_I[i]);
@@ -50,7 +44,6 @@ int main()
 	fclose(fp);
 
 	//Check against golden output.
-
   printf ("Comparing against output data \n");
   if (system("diff -w out.dat out.gold.dat")) {
 	fprintf(stdout, "*******************************************\n");
