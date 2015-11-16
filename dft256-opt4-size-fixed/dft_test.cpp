@@ -44,8 +44,8 @@ int main()
 	fp=fopen("out.dat", "w");
 	printf("\nPrinting DFT Output\n");
 	for(int i=0; i<SIZE; i++){
-		printf("%4d\t%f\t%f\n",i,In_R[i],In_I[i]);
-		fprintf(fp, "%4d\t%f\t%f\n",i,In_R[i],In_I[i]);
+		printf("%4d\t%f\t%f\n",i,float(In_R[i]),float(In_I[i]));
+		fprintf(fp, "%4d\t%f\t%f\n",i,float(In_R[i]),float(In_I[i]));
 	}
 	fclose(fp);
 
